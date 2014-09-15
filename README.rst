@@ -23,7 +23,7 @@ Example command line usage::
 
 Example usage from Python:
 
-.. code::python
+.. code:: python
 
     import subprocess
     from nsenter import Namespace
