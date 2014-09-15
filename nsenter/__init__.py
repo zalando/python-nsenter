@@ -49,7 +49,7 @@ def main():
     for ns in NAMESPACE_NAMES:
         parser.add_argument('--{}'.format(ns), action='store_true', help='Enter the {} namespace'.format(ns))
     parser.add_argument('--all', action='store_true', help='Enter all namespaces')
-    parser.add_argument('command')
+    parser.add_argument('command', nargs='*', default='/bin/sh')
 
     args = parser.parse_args()
 
@@ -60,7 +60,7 @@ def main():
                 namespaces.append(Namespace(args.target, ns))
         for ns in namespaces:
             stack.enter_context(ns)
-        os.execl(args.command, args.command)
+        os.execl(args.command[0], *args.command)
 
 
 if __name__ == '__main__':
