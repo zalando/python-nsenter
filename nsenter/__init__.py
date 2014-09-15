@@ -7,8 +7,6 @@ nsenter - run program with namespaces of other processes
 import argparse
 import ctypes
 import os
-import shlex
-import subprocess
 import logging
 from pathlib import Path
 from contextlib import ExitStack
