@@ -12,13 +12,19 @@ def read(fname):
 def setup_package():
     setuptools.setup(
         name='nsenter',
-        version='0.1.2',
+        version='0.1.3',
         url='https://github.com/zalando/python-nsenter',
         description='Enter kernel namespaces from Python',
         author='Henning Jacobs',
         author_email='henning.jacobs@zalando.de',
         long_description=read('README.rst'),
-        classifiers=['Development Status :: 4 - Beta', 'Programming Language :: Python'],
+        classifiers=[
+            'Development Status :: 4 - Beta',
+            'Programming Language :: Python',
+            'Programming Language :: Python :: 3.4',
+            'Programming Language :: Python :: Implementation :: CPython',
+            'Operating System :: POSIX :: Linux',
+            'License :: OSI Approved :: Apache Software License'],
         test_suite='tests',
         packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
         entry_points={'console_scripts': ['nsenter = nsenter:main']}
