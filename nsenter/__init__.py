@@ -23,7 +23,7 @@ def nsfd(process:str, ns_type:str) -> Path:
     """
     Returns the namespace file descriptor for process (self or PID) and namespace type
     """
-    return Path('/proc') / process / 'ns' / ns_type
+    return Path('/proc') / str(process) / 'ns' / ns_type
 
 
 class Namespace:
@@ -42,14 +42,19 @@ class Namespace:
     def __exit__(self, type, value, tb):
         log.debug('Leaving %s namespace %s', self.ns_type, self.pid)
         libc.setns(self.parent_fileno, 0)
+        try:
+            self.target_fd.close()
+        except:
+            pass
+        self.parent_fd.close()
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--target', metavar='PID', help='Specify a target process to get contexts from.')
+    parser.add_argument('--target', required=True, metavar='PID', help='Specify a target process to get contexts from.')
     for ns in NAMESPACE_NAMES:
         parser.add_argument('--{}'.format(ns), action='store_true', help='Enter the {} namespace'.format(ns))
     parser.add_argument('--all', action='store_true', help='Enter all namespaces')
-    parser.add_argument('command', nargs='*', default='/bin/sh')
+    parser.add_argument('command', nargs='*', default=['/bin/sh'])
 
     args = parser.parse_args()
 
