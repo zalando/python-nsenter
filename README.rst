@@ -15,9 +15,22 @@ Install from git source::
 
     python3 setup.py install
 
-Example usage::
+Example command line usage::
 
     docker run -d --name=redis -t redis
     sudo nsenter --all --target=`docker inspect --format '{{ .State.Pid }}' redis` /bin/bash
+
+
+Example usage from Python:
+
+.. code::python
+
+    import subprocess
+    from nsenter import Namespace
+
+    with Namespace(mypid, 'net'):
+        # output network interfaces as seen from within the mypid's net NS:
+        subprocess.check_output(['ip', 'a'])
+
 
 .. _nsenter: http://man7.org/linux/man-pages/man1/nsenter.1.html
