@@ -12,7 +12,7 @@ def read(fname):
 def setup_package():
     setuptools.setup(
         name='nsenter',
-        version='0.1.4',
+        version='0.1.4-1',
         url='https://github.com/zalando/python-nsenter',
         description='Enter kernel namespaces from Python',
         author='Henning Jacobs',
