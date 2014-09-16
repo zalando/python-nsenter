@@ -12,12 +12,14 @@ def read(fname):
 def setup_package():
     setuptools.setup(
         name='nsenter',
-        version='0.1.3',
+        version='0.1.4',
         url='https://github.com/zalando/python-nsenter',
         description='Enter kernel namespaces from Python',
         author='Henning Jacobs',
         author_email='henning.jacobs@zalando.de',
         long_description=read('README.rst'),
+        license='Apache License 2.0',
+        keywords='docker container namespace kernel setns',
         classifiers=[
             'Development Status :: 4 - Beta',
             'Programming Language :: Python',

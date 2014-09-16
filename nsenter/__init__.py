@@ -48,7 +48,7 @@ class Namespace:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--target', required=True, metavar='PID', help='Specify a target process to get contexts from.')
+    parser.add_argument('--target', '-t', required=True, metavar='PID', help='Specify a target process to get contexts from.')
     for ns in NAMESPACE_NAMES:
         parser.add_argument('--{}'.format(ns), action='store_true', help='Enter the {} namespace'.format(ns))
     parser.add_argument('--all', action='store_true', help='Enter all namespaces')
