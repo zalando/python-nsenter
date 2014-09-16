@@ -7,6 +7,8 @@ The command line interface tries to be similar to the nsenter_ C program.
 
 Requires Python 3.4.
 
+See the introductory `blog post "Entering Kernel Namespaces from Python"`_.
+
 Install from PyPI::
 
     sudo pip3 install nsenter
@@ -34,3 +36,4 @@ Example usage from Python:
 
 
 .. _nsenter: http://man7.org/linux/man-pages/man1/nsenter.1.html
+.. _blog post "Entering Kernel Namespaces from Python": http://tech.zalando.com/posts/entering-kernel-namespaces-with-python.html
