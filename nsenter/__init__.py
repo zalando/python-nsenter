@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-'''
+"""
 nsenter - run program with namespaces of other processes
-'''
+"""
 
 import argparse
 import ctypes
@@ -17,7 +17,8 @@ log = logging.getLogger('nsenter')
 
 libc = ctypes.CDLL('libc.so.6')
 
-def nsfd(process:str, ns_type:str) -> Path:
+
+def nsfd(process: str, ns_type: str) -> Path:
     """
     Returns the namespace file descriptor for process (self or PID) and namespace type
     """
@@ -29,9 +30,9 @@ class Namespace:
         self.pid = pid
         self.ns_type = ns_type
         self.parent_fd = nsfd('self', ns_type).open()
-        self.parent_fileno =self.parent_fd.fileno()
+        self.parent_fileno = self.parent_fd.fileno()
         self.target_fd = nsfd(pid, ns_type).open()
-        self.target_fileno =self.target_fd.fileno()
+        self.target_fileno = self.target_fd.fileno()
 
     def __enter__(self):
         log.debug('Entering %s namespace %s', self.ns_type, self.pid)
@@ -46,9 +47,11 @@ class Namespace:
             pass
         self.parent_fd.close()
 
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--target', '-t', required=True, metavar='PID', help='Specify a target process to get contexts from.')
+    parser.add_argument('--target', '-t', required=True, metavar='PID',
+                        help='Specify a target process to get contexts from.')
     for ns in NAMESPACE_NAMES:
         parser.add_argument('--{}'.format(ns), action='store_true', help='Enter the {} namespace'.format(ns))
     parser.add_argument('--all', action='store_true', help='Enter all namespaces')
