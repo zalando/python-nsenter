@@ -25,12 +25,16 @@ def setup_package():
         classifiers=[
             'Development Status :: 4 - Beta',
             'Programming Language :: Python',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 2.6',
+            'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: Implementation :: CPython',
             'Operating System :: POSIX :: Linux',
             'License :: OSI Approved :: Apache Software License'],
         test_suite='tests',
-        setup_requires=['flake8'],
+        setup_requires=['flake8', 'pathlib', 'contextlib2', 'argparse'],
         packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
         entry_points={'console_scripts': ['nsenter = nsenter:main']}
     )
