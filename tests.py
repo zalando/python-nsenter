@@ -19,8 +19,6 @@ class TestNamespaces(unittest.TestCase):
 
     def test_namespaces_except_user(self):
         """Test entering all namespaces execept user
-
-        Must have CAP_SYS_ADMIN to run these tests properly
         """
 
         #Can't use the assertRaises context manager in python2.6

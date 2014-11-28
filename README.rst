@@ -5,7 +5,7 @@ NSEnter
 This Python package allows entering Linux kernel namespaces (mount, IPC, net, PID, user and UTS) by doing the "setns" syscall.
 The command line interface tries to be similar to the nsenter_ C program.
 
-Requires Python 3.4.
+Requires Python 2.6 or higher
 
 See the introductory `blog post "Entering Kernel Namespaces from Python"`_.
 
