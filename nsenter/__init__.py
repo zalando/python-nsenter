@@ -9,7 +9,10 @@ import ctypes
 import os
 import logging
 from pathlib import Path
-from contextlib import ExitStack
+try:
+    from contextlib import ExitStack
+except ImportError:
+    from contextlib2 import ExitStack
 
 NAMESPACE_NAMES = frozenset('mnt ipc net pid user uts'.split())
 
@@ -18,21 +21,23 @@ log = logging.getLogger('nsenter')
 libc = ctypes.CDLL('libc.so.6')
 
 
-def nsfd(process: str, ns_type: str) -> Path:
+def nsfd(process, ns_type):
     """
     Returns the namespace file descriptor for process (self or PID) and namespace type
     """
     return Path('/proc') / str(process) / 'ns' / ns_type
+nsfd.__annotations__ = {'process': str, 'ns_type': str, 'return': Path}
 
-
-class Namespace:
-    def __init__(self, pid: str, ns_type: str):
+class Namespace(object):
+    def __init__(self, pid, ns_type):
         self.pid = pid
         self.ns_type = ns_type
         self.parent_fd = nsfd('self', ns_type).open()
         self.parent_fileno = self.parent_fd.fileno()
         self.target_fd = nsfd(pid, ns_type).open()
         self.target_fileno = self.target_fd.fileno()
+
+    __init__.__annotations__  = {'pid': str, 'ns_type': str}
 
     def __enter__(self):
         log.debug('Entering %s namespace %s', self.ns_type, self.pid)
@@ -53,7 +58,7 @@ def main():
     parser.add_argument('--target', '-t', required=True, metavar='PID',
                         help='Specify a target process to get contexts from.')
     for ns in NAMESPACE_NAMES:
-        parser.add_argument('--{}'.format(ns), action='store_true', help='Enter the {} namespace'.format(ns))
+        parser.add_argument('--{0}'.format(ns), action='store_true', help='Enter the {0} namespace'.format(ns))
     parser.add_argument('--all', action='store_true', help='Enter all namespaces')
     parser.add_argument('command', nargs='*', default=['/bin/sh'])
 
@@ -67,7 +72,6 @@ def main():
         for ns in namespaces:
             stack.enter_context(ns)
         os.execl(args.command[0], *args.command)
-
 
 if __name__ == '__main__':
     main()
