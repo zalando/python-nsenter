@@ -11,6 +11,11 @@ def read(fname):
     return open(os.path.join(__location__, fname)).read()
 
 
+def get_install_requirements(path):
+    content = open(os.path.join(__location__, path)).read()
+    return [req for req in content.split('\\n') if req != '']
+
+
 def setup_package():
     setuptools.setup(
         name='nsenter',
@@ -34,7 +39,8 @@ def setup_package():
             'Operating System :: POSIX :: Linux',
             'License :: OSI Approved :: Apache Software License'],
         test_suite='tests',
-        setup_requires=['flake8', 'pathlib', 'contextlib2', 'argparse'],
+        setup_requires=['flake8'],
+        install_requires=get_install_requirements('requirements.txt'),
         packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
         entry_points={'console_scripts': ['nsenter = nsenter:main']}
     )
