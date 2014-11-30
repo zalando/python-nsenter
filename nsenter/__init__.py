@@ -26,7 +26,9 @@ def nsfd(process, ns_type):
     Returns the namespace file descriptor for process (self or PID) and namespace type
     """
     return Path('/proc') / str(process) / 'ns' / ns_type
+
 nsfd.__annotations__ = {'process': str, 'ns_type': str, 'return': Path}
+
 
 class Namespace(object):
     def __init__(self, pid, ns_type):
@@ -37,7 +39,7 @@ class Namespace(object):
         self.target_fd = nsfd(pid, ns_type).open()
         self.target_fileno = self.target_fd.fileno()
 
-    __init__.__annotations__  = {'pid': str, 'ns_type': str}
+    __init__.__annotations__ = {'pid': str, 'ns_type': str}
 
     def __enter__(self):
         log.debug('Entering %s namespace %s', self.ns_type, self.pid)

@@ -14,7 +14,7 @@ def read(fname):
 def setup_package():
     setuptools.setup(
         name='nsenter',
-        version='0.1.4-2',
+        version='0.1.5',
         url='https://github.com/zalando/python-nsenter',
         description='Enter kernel namespaces from Python',
         author='Henning Jacobs',
