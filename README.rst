@@ -2,6 +2,10 @@
 NSEnter
 =======
 
+.. image:: https://travis-ci.org/zalando/python-nsenter.svg?branch=master
+   :target: https://travis-ci.org/zalando/python-nsenter
+   :alt: Travis CI build status
+
 This Python package allows entering Linux kernel namespaces (mount, IPC, net, PID, user and UTS) by doing the "setns" syscall.
 The command line interface tries to be similar to the nsenter_ C program.
 
