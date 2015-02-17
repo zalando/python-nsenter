@@ -129,8 +129,7 @@ def main():  # pragma: no cover
     args = parser.parse_args()
 
     # make sure we have --all or at least one namespace
-    if (True not in [getattr(args, ns) for ns in NAMESPACE_NAMES]
-            and not args.all):
+    if (True not in [getattr(args, ns) for ns in NAMESPACE_NAMES] and not args.all):
         parser.error('You must specify at least one namespace')
 
     try:
