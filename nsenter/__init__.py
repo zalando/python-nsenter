@@ -111,6 +111,9 @@ def main():  # pragma: no cover
     parser.add_argument('--target', '-t', required=True, metavar='PID',
                         help='A target process to get contexts from')
 
+    parser.add_argument('--proc', '-p', metavar='PROCFS', default='/proc',
+                        help='The target proc file system')
+
     group = parser.add_argument_group('Namespaces')
 
     for ns in NAMESPACE_NAMES:
@@ -137,7 +140,7 @@ def main():  # pragma: no cover
             namespaces = []
             for ns in NAMESPACE_NAMES:
                 if getattr(args, ns) or args.all:
-                    namespaces.append(Namespace(args.target, ns))
+                    namespaces.append(Namespace(args.target, ns, proc=args.proc))
 
             for ns in namespaces:
                 stack.enter_context(ns)
