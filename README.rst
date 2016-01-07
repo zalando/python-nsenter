@@ -38,6 +38,10 @@ Example usage from Python:
         # output network interfaces as seen from within the mypid's net NS:
         subprocess.check_output(['ip', 'a'])
 
+    # or enter an arbitrary namespace:
+    with Namespace('/var/run/netns/foo', 'net'):
+        # output network interfaces as seen from within the mypid's net NS:
+        subprocess.check_output(['ip', 'a'])
 
 .. _nsenter: http://man7.org/linux/man-pages/man1/nsenter.1.html
 .. _blog post "Entering Kernel Namespaces from Python": http://tech.zalando.com/posts/entering-kernel-namespaces-with-python.html

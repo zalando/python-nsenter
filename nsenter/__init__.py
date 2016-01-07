@@ -22,12 +22,16 @@ class Namespace(object):
     """A context manager for entering namespaces
 
     Args:
-        pid: The PID for the owner of the namespace to enter
+        pid: The PID for the owner of the namespace to enter, or an absolute
+             path to a file which represents a namespace handle.
+
         ns_type: The type of namespace to enter must be one of
-            mnt ipc net pid user uts
+                 mnt ipc net pid user uts.  If pid is an absolute path, this
+                 much match the type of namespace it represents
+
         proc: The path to the /proc file system.  If running in a container
-            the host proc file system may be binded mounted in a different
-            location
+              the host proc file system may be binded mounted in a different
+              location
 
     Raises:
         IOError: A non existent PID was provided
@@ -35,7 +39,11 @@ class Namespace(object):
         OSError: Unable to enter or exit the namespace
 
     Example:
-        with Namespace(<pid>, <ns_type>):
+        with Namespace(916, 'net'):
+            #do something in the namespace
+            pass
+
+        with Namespace('/var/run/netns/foo', 'net'):
             #do something in the namespace
             pass
     """
@@ -53,7 +61,13 @@ class Namespace(object):
         self.ns_type = ns_type
         self.proc = proc
 
-        self.target_fd = self._nsfd(pid, ns_type).open()
+        # if it's numeric, then it's a pid, else assume it's a path
+        try:
+            pid = int(pid)
+            self.target_fd = self._nsfd(pid, ns_type).open()
+        except ValueError:
+            self.target_fd = Path(pid).open()
+
         self.target_fileno = self.target_fd.fileno()
 
         self.parent_fd = self._nsfd('self', ns_type).open()
@@ -82,7 +96,9 @@ class Namespace(object):
             self.target_fd.close()
         except:
             pass
-        self.parent_fd.close()
+
+        if self.parent_fd is not None:
+            self.parent_fd.close()
 
     def __enter__(self):
         self._log.debug('Entering %s namespace %s', self.ns_type, self.pid)
