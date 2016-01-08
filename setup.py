@@ -19,7 +19,7 @@ def get_install_requirements(path):
 def setup_package():
     setuptools.setup(
         name='nsenter',
-        version='0.1.7',
+        version='0.2',
         url='https://github.com/zalando/python-nsenter',
         description='Enter kernel namespaces from Python',
         author='Henning Jacobs',
