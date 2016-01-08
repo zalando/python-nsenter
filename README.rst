@@ -40,7 +40,7 @@ Example usage from Python:
 
     # or enter an arbitrary namespace:
     with Namespace('/var/run/netns/foo', 'net'):
-        # output network interfaces as seen from within the mypid's net NS:
+        # output network interfaces as seen from within the net NS "foo":
         subprocess.check_output(['ip', 'a'])
 
 .. _nsenter: http://man7.org/linux/man-pages/man1/nsenter.1.html
