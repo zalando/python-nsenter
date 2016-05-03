@@ -6,28 +6,43 @@ NSEnter
    :target: https://travis-ci.org/zalando/python-nsenter
    :alt: Travis CI build status
 
-This Python package allows entering Linux kernel namespaces (mount, IPC, net, PID, user and UTS) by doing the "setns" syscall.
-The command line interface tries to be similar to the nsenter_ C program.
+**NSEnter** is a Python package that enables you to enter Linux kernel namespaces — mount, IPC, net, PID, user and UTS — with a single, simple "setns" syscall. The command line interface is similar to the nsenter_ C program.
 
-Requires Python 2.6 or higher
+Project Origins
+-------
 
-See the introductory `blog post "Entering Kernel Namespaces from Python"`_.
+When working with Docker_ containers, questions usually arise about how to connect into a running container without starting an explicit SSH daemon (`which is considered a bad idea`_). One way is to use Linux Kernel namespaces, which Docker uses to restrict the view from within containers. 
 
-Install from PyPI::
+The ``util-linux`` package provides the ``nsenter`` command line utility, but `Ubuntu 16.04 LTS`_ unfortunately does not. Jérôme Petazzoni provides a `Docker recipe`_ for ``nsenter`` on GitHub, or you can compile ``nsenter`` `from source`_. As there is only one simple syscall to enter a namespace, we can do the call directly from within Python using the ``ctypes`` module. We bundled this syscall to create NSEnter, making the command line interface similar to the `nsenter C`_ program.
+
+Additional Links
+`````````````
+- "Entering Kernel Namespaces from Python", Zalando Tech `blog post`_
+- On PyPi_
+
+Requirements
+`````````````
+- Python 2.6 or higher
+
+Installation
+`````````````
+From PyPI::
 
     sudo pip3 install nsenter
 
-Install from git source::
+From git source::
 
     python3 setup.py install
 
-Example command line usage::
+Usage
+`````````````
+Example of command line usage::
 
     docker run -d --name=redis -t redis
     sudo nsenter --all --target=`docker inspect --format '{{ .State.Pid }}' redis` /bin/bash
 
 
-Example usage from Python:
+Example of usage from Python:
 
 .. code:: python
 
@@ -43,5 +58,20 @@ Example usage from Python:
         # output network interfaces as seen from within the net NS "foo":
         subprocess.check_output(['ip', 'a'])
 
+Development Status
+`````````````
+This project works as-is. There are currently no plans to extend it, but if you have an idea please submit an Issue to the maintainers.
+
+License
+-------
+See file_.
+
+.. _Docker: https://www.docker.com/
+.. _which is considered a bad idea: https://jpetazzo.github.io/2014/06/23/docker-ssh-considered-evil/
+.. _Ubuntu 16.04 LTS: https://askubuntu.com/questions/439056/why-there-is-no-nsenter-in-util-linux
+.. _Docker recipe: https://github.com/jpetazzo/nsenter
+.. _from source: https://askubuntu.com/questions/439056/why-there-is-no-nsenter-in-util-linux
 .. _nsenter: http://man7.org/linux/man-pages/man1/nsenter.1.html
-.. _blog post "Entering Kernel Namespaces from Python": http://tech.zalando.com/posts/entering-kernel-namespaces-with-python.html
+.. _blog post: http://tech.zalando.com/posts/entering-kernel-namespaces-with-python.html
+.. _PyPi: https://pypi.python.org/pypi/nsenter
+.. _file: https://github.com/zalando/python-nsenter/blob/master/LICENSE
