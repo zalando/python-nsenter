@@ -17,7 +17,7 @@ The ``util-linux`` package provides the ``nsenter`` command line utility, but `U
 
 Additional Links
 `````````````
-- "Entering Kernel Namespaces from Python", Zalando Tech `blog post`_
+- "Entering Kernel Namespaces from Python," Zalando Tech `blog post`_
 - On PyPi_
 
 Requirements
