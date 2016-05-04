@@ -13,7 +13,7 @@ Project Origins
 
 When working with Docker_ containers, questions usually arise about how to connect into a running container without starting an explicit SSH daemon (`which is considered a bad idea`_). One way is to use Linux Kernel namespaces, which Docker uses to restrict the view from within containers. 
 
-The ``util-linux`` package provides the ``nsenter`` command line utility, but `Ubuntu 16.04 LTS`_ unfortunately does not. Jérôme Petazzoni provides a `Docker recipe`_ for ``nsenter`` on GitHub, or you can compile ``nsenter`` `from source`_. As there is only one simple syscall to enter a namespace, we can do the call directly from within Python using the ``ctypes`` module. We bundled this syscall to create NSEnter, making the command line interface similar to the `nsenter C`_ program.
+The ``util-linux`` package provides the ``nsenter`` command line utility, but `Ubuntu 16.04 LTS`_ unfortunately does not. Jérôme Petazzoni provides a `Docker recipe`_ for ``nsenter`` on GitHub, or you can compile ``nsenter`` `from source`_. As there is only one simple syscall to enter a namespace, we can do the call directly from within Python using the ``ctypes`` module. We bundled this syscall to create NSEnter.
 
 Additional Links
 `````````````
