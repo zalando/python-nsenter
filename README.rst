@@ -9,23 +9,23 @@ NSEnter
 **NSEnter** is a Python package that enables you to enter Linux kernel namespaces — mount, IPC, net, PID, user and UTS — with a single, simple "setns" syscall. The command line interface is similar to the nsenter_ C program.
 
 Project Origins
--------
+---------------
 
 When working with Docker_ containers, questions usually arise about how to connect into a running container without starting an explicit SSH daemon (`which is considered a bad idea`_). One way is to use Linux Kernel namespaces, which Docker uses to restrict the view from within containers. 
 
 The ``util-linux`` package provides the ``nsenter`` command line utility, but `Ubuntu 16.04 LTS`_ unfortunately does not. Jérôme Petazzoni provides a `Docker recipe`_ for ``nsenter`` on GitHub, or you can compile ``nsenter`` `from source`_. As there is only one simple syscall to enter a namespace, we can do the call directly from within Python using the ``ctypes`` module. We bundled this syscall to create NSEnter.
 
 Additional Links
-`````````````
+````````````````
 - "Entering Kernel Namespaces from Python," Zalando Tech `blog post`_
 - On PyPi_
 
 Requirements
-`````````````
+````````````
 - Python 2.6 or higher
 
 Installation
-`````````````
+````````````
 From PyPI::
 
     sudo pip3 install nsenter
@@ -35,7 +35,7 @@ From git source::
     python3 setup.py install
 
 Usage
-`````````````
+`````
 Example of command line usage::
 
     docker run -d --name=redis -t redis
@@ -59,7 +59,7 @@ Example of usage from Python:
         subprocess.check_output(['ip', 'a'])
 
 Development Status
-`````````````
+``````````````````
 This project works as-is. There are currently no plans to extend it, but if you have an idea please submit an Issue to the maintainers.
 
 License
