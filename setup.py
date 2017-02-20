@@ -45,5 +45,6 @@ def setup_package():
         entry_points={'console_scripts': ['nsenter = nsenter:main']}
     )
 
+
 if __name__ == '__main__':
     setup_package()
