@@ -19,7 +19,7 @@ def get_install_requirements(path):
 def setup_package():
     setuptools.setup(
         name='nsenter',
-        version='0.2',
+        version='0.3',
         url='https://github.com/zalando/python-nsenter',
         description='Enter kernel namespaces from Python',
         author='Henning Jacobs',
@@ -35,6 +35,9 @@ def setup_package():
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.4',
+            'Programming Language :: Python :: 3.5',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: Implementation :: CPython',
             'Operating System :: POSIX :: Linux',
             'License :: OSI Approved :: Apache Software License'],

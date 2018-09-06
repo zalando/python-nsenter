@@ -6,6 +6,7 @@ nsenter - run program with namespaces of other processes
 
 import argparse
 import ctypes
+import ctypes.util
 import errno
 import os
 import logging
@@ -49,7 +50,7 @@ class Namespace(object):
     """
 
     _log = logging.getLogger(__name__)
-    _libc = ctypes.CDLL('libc.so.6', use_errno=True)
+    _libc = ctypes.CDLL(ctypes.util.find_library('c'), use_errno=True)
 
     def __init__(self, pid, ns_type, proc='/proc'):
         if ns_type not in NAMESPACE_NAMES:
